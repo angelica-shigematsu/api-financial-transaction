@@ -14,6 +14,7 @@ export const databaseProviders = [
         database: 'financial',
         entities: [ User ],
         synchronize: true,
+        "logging": true
       });
 
       return dataSource.initialize();

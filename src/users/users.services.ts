@@ -11,9 +11,39 @@ export class UserService {
   ) {}
 
   async createUser(userDto: CreateUserDto): Promise<User> {
-    return this.userRepository.create(userDto);
+    const user = {
+      ...userDto,
+      bankBalance: 0,
+      active: true
+    }
+    return this.userRepository.save(user);
   }
+
   async findOneByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } } );
+    return await this.userRepository.findOne({ where: { email } } );
+  }
+
+  async findOneById(id: number): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { id: id }
+    })
+  }
+
+  async disableAccessUser(id: number) {
+    const user = await this.findOneById(id);
+
+    if (!user) throw new Error(`User isn't found`)
+
+    user.active = false;
+
+    user.save();
+
+    return 'Usuário desabilitado'
+  }
+
+  async showBankBalance(id: number) {
+    const user = await this.findOneById(id);
+
+    return { saldo: user.bankBalance };
   }
 }

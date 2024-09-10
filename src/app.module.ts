@@ -9,4 +9,4 @@ import { UserModule } from './users/users.module';
   ],
 })
 export class AppModule {}
-export { DatabaseModule, UserModule  };
+export { DatabaseModule, UserModule };

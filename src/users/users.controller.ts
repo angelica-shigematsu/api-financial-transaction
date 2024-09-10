@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post, Put } from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/UserDTO';
 import { UserService } from './users.services';
 
@@ -12,6 +12,16 @@ export class UsersController {
 
     if (user) throw new Error(`User ${user.email} already exists`);
 
-    return this.userService.createUser(userDto);
+    return await this.userService.createUser(userDto);
+  }
+
+  @Put('/:id')
+  async disableAccount(@Param() id: number) {
+    return this.userService.disableAccessUser(id);
+  }
+
+  @Put('saldo/:id')
+  async showBankBalance(@Param() id: number) {
+    return this.userService.showBankBalance(id);
   }
 }

@@ -15,4 +15,14 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Column()
+  active: boolean;
+
+  @Column()
+  accessUser: string;
+
+  //saldo
+  @Column()
+  bankBalance: number;
+
 }
