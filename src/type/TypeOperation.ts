@@ -1,0 +1,5 @@
+export enum TypeOperation {
+  DEPOSITO = 'DEPOSITO',
+  SAQUE = 'SAQUE',
+  TRANSFERENCIA = 'TRANSFERENCIA'
+}
