@@ -1,5 +1,6 @@
 import { User } from 'src/entity/User';
 import { DataSource } from 'typeorm';
+import { Transaction } from './entity/Transaction';
 
 export const databaseProviders = [
   {
@@ -12,7 +13,8 @@ export const databaseProviders = [
         username: 'root',
         password: 'root',
         database: 'financial',
-        entities: [ User ],
+        entities: [ User, Transaction ],
+        migrations: [__dirname + "/migration/**/*.ts"],
         synchronize: true,
         "logging": true
       });

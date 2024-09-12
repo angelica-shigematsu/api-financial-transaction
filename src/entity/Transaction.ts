@@ -1,5 +1,6 @@
 import { TypeOperation } from "src/type/TypeOperation";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./User";
 
 @Entity() 
 
@@ -18,4 +19,7 @@ export class Transaction extends BaseEntity {
 
   @Column()
   value: number;
+
+  @ManyToOne(() => User, user => user.transaction)
+  userId: number;
 }

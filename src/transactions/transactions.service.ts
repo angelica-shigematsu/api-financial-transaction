@@ -17,6 +17,8 @@ export class TransactionService {
 
   async createTransaction(id: number, transactionDto: CreateTransactionDto) {
 
+    await this.checkAntiFraudTransaction(id);
+
     if (transactionDto.typeOperation == TypeOperation.DEPOSITO) {
 
       await this.deposit(id, transactionDto.value);
@@ -67,5 +69,18 @@ export class TransactionService {
     await this.withdraw(id, value);
 
     await this.deposit(destinationAccountId, value);
+  }
+
+  async checkAntiFraudTransaction(id: number) {
+    const user = await this.transactionRepository.findOne({
+      where: { userId: id },
+      order: {
+        date: "DESC"
+      }
+    })
+
+    const breakBetweenTransaction = new Date().getMinutes() - user.date.getMinutes();
+
+    if (breakBetweenTransaction < 10) throw new Error(`Can't do transaction less than 10 minutes after`)
   }
 }
